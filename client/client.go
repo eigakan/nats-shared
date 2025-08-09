@@ -74,3 +74,16 @@ func (c *Client) Respond(msg *nats.Msg, data any) error {
 
 	return nil
 }
+
+func (c *Client) Subscribe(topic string, handler nats.MsgHandler) (*nats.Subscription, error) {
+	if c.nc == nil {
+		return nil, fmt.Errorf("NATS connection is nil")
+	}
+
+	sub, err := c.nc.Subscribe(topic, handler)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to subscribe to subject %s: %w", topic, err)
+	}
+
+	return sub, nil
+}
