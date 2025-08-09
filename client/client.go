@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/eigakan/nats-shared/model"
 	"github.com/nats-io/nats.go"
@@ -87,4 +88,22 @@ func (c *Client) Subscribe(topic string, handler nats.MsgHandler) (*nats.Subscri
 	}
 
 	return sub, nil
+}
+
+func (c *Client) Request(topic string, data any, timeout time.Duration) (*nats.Msg, error) {
+	if c.nc == nil {
+		return nil, fmt.Errorf("NATS connection is nil")
+	}
+
+	req, err := json.Marshal(data)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to marshal request data: %w", err)
+	}
+
+	msg, err := c.nc.Request(topic, req, timeout)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to send request to subject %s: %w", topic, err)
+	}
+
+	return msg, nil
 }
