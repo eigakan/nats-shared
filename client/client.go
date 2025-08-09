@@ -60,6 +60,7 @@ func (c *Client) RespondErr(msg *nats.Msg, errText string) error {
 func (c *Client) Respond(msg *nats.Msg, data any) error {
 	var resDto model.NatsResponse[any]
 	resDto.Data = data
+	resDto.Status = true
 
 	res, err := json.Marshal(resDto)
 	if err != nil {
