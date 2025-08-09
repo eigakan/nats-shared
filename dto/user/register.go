@@ -1,4 +1,4 @@
-package user
+package dto
 
 type RegisterRequestDTO struct {
 	Login    string `json:"login"`
@@ -6,4 +6,6 @@ type RegisterRequestDTO struct {
 	Email    string `json:"email"`
 }
 
-type RegisterResponseDTO struct{}
+type RegisterResponseDTO struct {
+	Ok bool `json:"ok"`
+}

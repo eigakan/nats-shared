@@ -1,3 +1,3 @@
-module github.com/eigakan/nats-dto
+module github.com/eigakan/nats-shared
 
 go 1.24.6
