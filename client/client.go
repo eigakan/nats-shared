@@ -58,10 +58,16 @@ func (c *Client) RespondErr(msg *nats.Msg, errText string) error {
 	return nil
 }
 
-func (c *Client) Respond(msg *nats.Msg, data []byte) error {
+func (c *Client) Respond(msg *nats.Msg, data map[string]any) error {
 	var resDto model.NatsResponse[any]
-	resDto.Data = data
 	resDto.Status = true
+
+	bytesPayload, err := json.Marshal(data)
+	if err != nil {
+		return fmt.Errorf("Failed to marshal response data: %w", err)
+	}
+
+	resDto.Data = bytesPayload
 
 	res, err := json.Marshal(resDto)
 	if err != nil {
@@ -90,12 +96,18 @@ func (c *Client) Subscribe(topic string, handler nats.MsgHandler) (*nats.Subscri
 	return sub, nil
 }
 
-func (c *Client) Request(topic string, data []byte, timeout time.Duration) (*nats.Msg, error) {
+func (c *Client) Request(topic string, data map[string]any, timeout time.Duration) (*nats.Msg, error) {
 	if c.nc == nil {
 		return nil, fmt.Errorf("NATS connection is nil")
 	}
 
-	msg, err := c.nc.Request(topic, data, timeout)
+	bytesData, err := json.Marshal(data)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to marshal request data: %w", err)
+	}
+
+	msg, err := c.nc.Request(topic, bytesData, timeout)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to send request to subject %s: %w", topic, err)
 	}
