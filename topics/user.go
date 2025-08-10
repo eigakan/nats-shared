@@ -1,6 +1,6 @@
 package topics
 
 const (
-	UserRegisterTopic = "user.register"
-	UserLoginTopic    = "user.login"
+	UserCreate = "user.create"
+	UserGet    = "user.get"
 )

@@ -43,6 +43,7 @@ func (c *Client) Drain() error {
 func (c *Client) RespondErr(msg *nats.Msg, errText string) error {
 	var resDto model.NatsResponse[any]
 	resDto.Err = errText
+	resDto.Data = nil
 
 	res, err := json.Marshal(resDto)
 	if err != nil {
