@@ -62,12 +62,7 @@ func (c *Client) Respond(msg *nats.Msg, jsonStruct any) error {
 	var resDto model.NatsResponse[any]
 	resDto.Status = true
 
-	bytesPayload, err := json.Marshal(jsonStruct)
-	if err != nil {
-		return fmt.Errorf("Failed to marshal response data: %w", err)
-	}
-
-	resDto.Data = bytesPayload
+	resDto.Data = jsonStruct
 
 	res, err := json.Marshal(resDto)
 	if err != nil {
