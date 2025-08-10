@@ -58,11 +58,11 @@ func (c *Client) RespondErr(msg *nats.Msg, errText string) error {
 	return nil
 }
 
-func (c *Client) Respond(msg *nats.Msg, data map[string]any) error {
+func (c *Client) Respond(msg *nats.Msg, jsonStruct any) error {
 	var resDto model.NatsResponse[any]
 	resDto.Status = true
 
-	bytesPayload, err := json.Marshal(data)
+	bytesPayload, err := json.Marshal(jsonStruct)
 	if err != nil {
 		return fmt.Errorf("Failed to marshal response data: %w", err)
 	}
@@ -96,12 +96,12 @@ func (c *Client) Subscribe(topic string, handler nats.MsgHandler) (*nats.Subscri
 	return sub, nil
 }
 
-func (c *Client) Request(topic string, data map[string]any, timeout time.Duration) (*nats.Msg, error) {
+func (c *Client) Request(topic string, jsonStruct any, timeout time.Duration) (*nats.Msg, error) {
 	if c.nc == nil {
 		return nil, fmt.Errorf("NATS connection is nil")
 	}
 
-	bytesData, err := json.Marshal(data)
+	bytesData, err := json.Marshal(jsonStruct)
 
 	if err != nil {
 		return nil, fmt.Errorf("Failed to marshal request data: %w", err)
