@@ -3,7 +3,8 @@ package dto
 import "time"
 
 type GetUserRequestDTO struct {
-	Login string `json:"login"`
+	Login  *string `json:"login,omitempty"`
+	UserID *uint   `json:"userId,omitempty"`
 }
 
 type GetUserResponseDTO struct {
