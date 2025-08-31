@@ -1,17 +1,13 @@
 package dto
 
-import "time"
+import (
+	"github.com/eigakan/nats-shared/model"
+)
 
 type GetUserRequestDTO struct {
-	Login  *string `json:"login,omitempty"`
-	UserID *uint   `json:"userId,omitempty"`
+	UserID uint `json:"userId"`
 }
 
 type GetUserResponseDTO struct {
-	ID        uint      `json:"id"`
-	Email     string    `json:"email"`
-	Login     string    `json:"login"`
-	Logo      string    `json:"logo"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	model.User
 }

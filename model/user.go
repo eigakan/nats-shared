@@ -1,17 +1,12 @@
-package dto
+package model
 
 import "time"
 
-type CheckPasswordRequestDTO struct {
-	Login    string `json:"login"`
-	Password string `json:"password"`
-}
-
-type CheckPasswordResponseDTO struct {
+type User struct {
 	ID        uint      `json:"id"`
 	Email     string    `json:"email"`
 	Login     string    `json:"login"`
-	Logo      string    `json:"logo"`
+	Logo      string    `json:"logo,omitempty"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
