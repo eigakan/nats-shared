@@ -1,7 +1,5 @@
 package dto
 
-import "github.com/eigakan/nats-shared/model"
-
 type CreateUserRequestDTO struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
@@ -9,5 +7,5 @@ type CreateUserRequestDTO struct {
 }
 
 type CreateUserResponseDTO struct {
-	model.User
+	Ok bool `json:"ok"`
 }
