@@ -5,7 +5,7 @@ import (
 )
 
 type GetUserRequestDTO struct {
-	UserID uint `json:"userId"`
+	UserID uint64 `json:"userId"`
 }
 
 type GetUserResponseDTO struct {
